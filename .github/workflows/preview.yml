@@ -1,0 +1,82 @@
+# Renders on request: one job per line of preview-request.txt — "<dir> <from> <to> [scale] [samples]" — at 60 fps
+# (motion blur from the samples; scale 2 = native 4K), muxed with <dir>/audio/mix.wav when the project has one,
+# uploaded to the «previews» release as <dir>-<from>-<to>-s<scale>.mp4. Licensed assets are decrypted with ASSETS_KEY.
+name: preview
+
+on:
+  push:
+    branches: [main]
+    paths: ['preview-request.txt']
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      items: ${{ steps.p.outputs.items }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: preview-request.txt
+          sparse-checkout-cone-mode: false
+      - id: p
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          out = []
+          for l in open('preview-request.txt'):
+              f = l.split()
+              if not f or f[0].startswith('#'): continue
+              out.append({'dir': f[0], 'a': f[1], 'z': f[2], 'scale': f[3] if len(f) > 3 else '1', 'samples': f[4] if len(f) > 4 else '4'})
+          print('items=' + json.dumps(out))
+          PY
+          gh release view previews -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh release create previews -R "$GITHUB_REPOSITORY" --title "Renders" --notes "work in progress" --latest=false
+
+  render:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    name: ${{ matrix.p.dir }} ${{ matrix.p.a }}-${{ matrix.p.z }} x${{ matrix.p.scale }}
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        p: ${{ fromJSON(needs.plan.outputs.items) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /${{ matrix.p.dir }}/
+            /assets/${{ matrix.p.dir }}.tgz.enc.*
+            /ci/
+          sparse-checkout-cone-mode: false
+      - uses: oven-sh/setup-bun@v2
+      - name: render
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ASSETS_KEY: ${{ secrets.ASSETS_KEY }}
+          D: ${{ matrix.p.dir }}
+          A: ${{ matrix.p.a }}
+          Z: ${{ matrix.p.z }}
+          S: ${{ matrix.p.scale }}
+          N: ${{ matrix.p.samples }}
+        run: |
+          bash ci/ffmpeg.sh
+          cat assets/$D.tgz.enc.part-* | openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:ASSETS_KEY | tar -C $D -xzf -
+          cd $D/app && (bun install --frozen-lockfile >/dev/null 2>&1 || bun install >/dev/null)
+          O="$GITHUB_WORKSPACE/$D-$A-$Z-s$S.mp4"; V="$GITHUB_WORKSPACE/v.mp4"
+          bun scripts/render.ts video --from $A --to $Z --fps 60 --scale $S --samples $N --shutter 0.5 --crf 12 --noaudio \
+            --chrome /usr/bin/google-chrome --out "$V" 2>&1 | tail -20
+          if [ -f ../audio/mix.wav ]; then
+            ffmpeg -v error -y -i "$V" -ss $A -t $(python3 -c "print($Z-$A)") -i ../audio/mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -shortest -movflags +faststart "$O"
+          else cp "$V" "$O"; fi
+          ffprobe -v error -show_entries stream=width,height,bit_rate:format=duration,size -of compact "$O"
+          gh release upload previews "$O" --clobber -R "$GITHUB_REPOSITORY"

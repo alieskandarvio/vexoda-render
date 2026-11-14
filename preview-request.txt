@@ -1,0 +1,5 @@
+# shot 1 test, native 4K @ 60 fps, 4 parts
+aiflow 0 1.1 2 6
+aiflow 1.1 2.2 2 6
+aiflow 2.2 3.3 2 6
+aiflow 3.3 4.3 2 6

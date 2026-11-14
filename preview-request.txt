@@ -1,4 +1,4 @@
-# «مساعد VEXODA» full, native 4K @ 60 fps, 25 parts (video only; assemble lays the mix)
+# «مساعد VEXODA» → the real daily analysis (search «الذهب»), native 4K @ 60 fps, 25 parts
 aiflow 0.0 1.092 2 6
 aiflow 1.092 2.184 2 6
 aiflow 2.184 3.276 2 6

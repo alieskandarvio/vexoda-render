@@ -37,7 +37,7 @@ cue(0.02, 'whoosh_soft', SOFT); cue(2.38, 'whoosh_soft', SOFT - 2, pan=-0.3)
 # S1 — the prompt
 cue(S1 + 0.02, 'scan_sweep', TINY, length=0.9)
 for i in range(4): cue(S1 + 0.72 + 0.07 * i, 'ui_dry_pop', UI - 2, pan=0.3 - 0.2 * i)
-for i in range(15): cue(S1 + 1.05 + i * (1.4 / 15), 'key_click', TINY + 1 + ((i * 37) % 5 - 2) * 0.6, pan=0.1 * ((i % 3) - 1), k=i)
+for i in range(5): cue(S1 + 1.25 + i * (1.05 / 5), 'key_click', TINY + 1 + ((i * 37) % 5 - 2) * 0.6, pan=0.1 * ((i % 3) - 1), k=i)   # «الذهب»: five letters
 cue(S1 + 2.5, 'whoosh_soft', TINY)
 cue(S1 + 3.32, 'mouse_click', UI + 2)
 cue(S1 + 3.36, 'ui_scifi_confirm', UI)

@@ -3,9 +3,9 @@
 // a spark that becomes the brand pill with its world orbiting, a tagline, the logo — vertical 9:16, VEXODA identity).
 // Cut on the music (Mixkit 744, 123.05 BPM; a bar = 1.9505 s; the edit's 0 is a downbeat of the track):
 //   S0 0.00–4.49   the question, then the turn: «تحتاج إلى تداولٍ أذكى؟» → «توقّف عن التخمين.»
-//   S1 4.49–8.79   the prompt: the bar draws itself, chips, «حلّل الذهب الآن», the cursor, the click (on bar 4), the wipe
-//   S2 8.79–11.71  «جارٍ التحليل.» — a lime field, the brand's starburst of V's turning, the analysis typing itself
-//   S3 11.71–14.63 white bars sweep → «تحليل بصري.» — three cards land (trend, strength, market summary)
+//   S1 4.49–8.79   the search: the bar draws itself, market chips, «الذهب», the cursor, the tap (on bar 4), the wipe
+//   S2 8.79–11.71  «تحليل اليوم جاهز.» — the lime field, the starburst of V's, the REAL daily analysis' fields typing in
+//   S3 11.71–14.63 white bars sweep → «تحليل بصري.» — three cards land (the falling trend, the RSI 37, today's levels — as the real analysis)
 //   S4 14.63–17.56 white frames → «تنظيم الصفقة» — entry / stop / target nodes wired from a spark; the V's outline
 //   S5 17.56–20.49 a spark → a ring → the «✦ VEXODA» pill, the platform's world orbiting it on threads
 //   S6 20.49–22.44 «من الفكرة إلى الصفقة.» / «بقوّة VEXODA»
@@ -50,9 +50,10 @@ const S2 = S1 + 4.3, S3 = BAR * 6, S4 = BAR * 7.5, S5 = BAR * 9, S6 = BAR * 10.5
 
 const BAR_ = { w: 900, h: 168, y: 0 };
 const R = BAR_.h / 2;
-const CHIPS = ['فوركس', 'ذهب', 'كريبتو', 'أخرى'];
-const PROMPT = 'حلّل الذهب الآن';
-const LINES = ['// بقوّة مساعد VEXODA', 'الأصل: XAU/USD · الإطار: 4 ساعات', 'الاتجاه: صاعد', 'الدعم: 4,064.68 · المقاومة: 4,115.71', 'السيولة: فوق 4,115', 'الخطّة: شراء عند الارتداد · المخاطرة 1%'];
+const CHIPS = ['فوركس', 'معادن', 'مؤشرات', 'كريبتو'];
+const PROMPT = 'الذهب';
+const PLACEHOLDER = 'ابحث عن سوق…';
+const LINES = ['// تحليل VEXODA اليومي · XAU/USD', 'الاتجاه المرجّح: هابط', 'مستوى الارتكاز: 3,889.76', 'المقاومة الأولى: 3,911.84', 'الدعم الأول: 3,856.38', 'يُحدَّث بعد إغلاق كل جلسة'];
 const ORBIT = ['chart-line-up', 'coins', 'currency-btc', 'users-three', 'robot', 'graduation-cap', 'wallet', 'handshake'];
 
 /** A word-by-word reveal out of a soft blur (the reference's text treatment). */
@@ -134,7 +135,7 @@ export default class AI extends Scene {
     const tw = c.measureText('توقّف عن التخمين.').width; c.restore();
     c.save(); c.globalAlpha = 1 - prog(t, 4.2, 4.49, ease.inQuad);
     reveal(c, 'توقّف عن التخمين.', W / 2 + 26, cy, 70, turn, { accent: 'التخمين.', accentCol: '#F2F3F5' });
-    arrow(W / 2 - tw / 2 - 30 + 26 - 18 * Math.sin(Math.max(0, t - 3.3) * 5) * Math.exp(-Math.max(0, t - 3.3) * 2), cy + 4, -1, prog(t, 3.0, 3.35, ease.outCubic));
+    arrow(W / 2 - tw / 2 - 64 + 26 - 18 * Math.sin(Math.max(0, t - 3.3) * 5) * Math.exp(-Math.max(0, t - 3.3) * 2), cy + 4, -1, prog(t, 3.0, 3.35, ease.outCubic));
     c.restore();
     return { zoom: 1 + 0.06 * prog(t, 0, 4.49, ease.inOutSine), cx: 0, cy: 0, lift: 0.3 };
   }
@@ -204,12 +205,12 @@ export default class AI extends Scene {
       c.strokeStyle = 'rgba(190,255,90,0.95)'; c.lineWidth = 3.4; c.shadowColor = 'rgba(160,240,60,0.9)'; c.shadowBlur = 18;
       c.stroke(); c.restore();
     }
-    // «+» at the start (right), the send button at the end (left)
+    // the search lens at the start (right), the «go» button at the end (left)
     const plus = prog(t, 0.62, 0.9, ease.outBack);
     if (plus > 0) {
       c.save(); c.translate(BAR.w / 2 - R, 0); c.scale(plus, plus); c.rotate((1 - plus) * 1.2);
       c.strokeStyle = '#F2F2F2'; c.lineWidth = 3.2; c.lineCap = 'round';
-      c.beginPath(); c.moveTo(-17, 0); c.lineTo(17, 0); c.moveTo(0, -17); c.lineTo(0, 17); c.stroke(); c.restore();
+      c.beginPath(); c.arc(-3, -3, 15, 0, Math.PI * 2); c.moveTo(8, 8); c.lineTo(19, 19); c.stroke(); c.restore();
     }
     const sendIn = prog(t, 2.35, 2.6, ease.outBack);
     const press = pulse(t, click, 0.12);
@@ -217,11 +218,11 @@ export default class AI extends Scene {
       c.save(); c.translate(sendX - rub * 10 + 6, 0); c.scale(sendIn * (1 - 0.14 * press), sendIn * (1 - 0.14 * press));
       c.fillStyle = '#F4F6F8'; c.beginPath(); c.arc(0, 0, 40, 0, Math.PI * 2); c.fill();
       c.strokeStyle = '#0A0B0D'; c.lineWidth = 4.2; c.lineCap = 'round'; c.lineJoin = 'round';
-      c.beginPath(); c.moveTo(0, 15); c.lineTo(0, -15); c.moveTo(-12, -3); c.lineTo(0, -15); c.lineTo(12, -3); c.stroke();
+      c.beginPath(); c.moveTo(15, 0); c.lineTo(-15, 0); c.moveTo(-3, -12); c.lineTo(-15, 0); c.lineTo(-3, 12); c.stroke();
       c.restore();
     }
     // the typed prompt (right → left), with its caret
-    const typed = prog(t, 1.05, 2.45);
+    const typed = prog(t, 1.25, 2.3);
     const nChars = Math.floor(typed * PROMPT.length + 0.0001);
     if (t > 0.95) {
       const s = PROMPT.slice(0, Math.max(0, nChars));
@@ -229,10 +230,12 @@ export default class AI extends Scene {
       c.font = font('CairoV@600', 66); c.direction = 'rtl'; c.textAlign = 'right'; c.textBaseline = 'middle';
       c.fillStyle = '#F4F6F8';
       const x0 = BAR.w / 2 - R - 46;
+      if (nChars <= 0) { c.save(); c.globalAlpha = 0.42 * prog(t, 0.95, 1.15); c.font = font('CairoV@500', 58); c.fillText(PLACEHOLDER, x0, 6); c.restore(); }
       c.fillText(s, x0, 6);
-      const w = c.measureText(s).width;
+      const w = nChars > 0 ? c.measureText(s).width : 0;
       const blink = t < 2.6 || Math.floor((t - 2.6) / 0.42) % 2 === 0;
-      if (blink && t < click) { c.fillStyle = 'rgba(190,255,90,0.95)'; c.fillRect(x0 - w - 8, -32, 4, 64); }
+      // the caret: at the start of the line (right, before the placeholder) until the first letter, then after the text
+      if (blink && t < click) { c.fillStyle = 'rgba(190,255,90,0.95)'; c.fillRect(nChars > 0 ? x0 - w - 8 : x0 + 10, -32, 4, 64); }
       c.restore();
     }
     // ---- 2 · the chips, dropping in above (right → left)
@@ -246,7 +249,7 @@ export default class AI extends Scene {
       const x = xr - tw / 2;
       xr -= tw + 16;
       if (e <= 0) return;
-      const active = i === 1 && t > 1.6;     // «ذهب» lights up as it is typed
+      const active = i === 1 && t > 1.45;    // «معادن» lights up as «الذهب» is typed
       c.save(); c.translate(x, chipY + (1 - e) * -26); c.globalAlpha = clamp(e * 1.3);
       c.beginPath(); c.roundRect(-tw / 2, -hh / 2, tw, hh, hh / 2);
       c.fillStyle = active ? 'rgba(146,199,32,0.16)' : 'rgba(255,255,255,0.05)'; c.fill();
@@ -316,7 +319,7 @@ export default class AI extends Scene {
     const x0 = W - 110, y0 = 330;
     const tk = prog(t, 0.15, 0.55);
     c.save(); c.font = font('CairoV@700', 82); c.direction = 'rtl'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillStyle = '#F4F6F2';
-    const title = 'جارٍ التحليل.';
+    const title = 'تحليل اليوم جاهز.';
     const n = Math.floor(tk * title.length + 1e-4);
     c.fillText(title.slice(0, n), x0, y0);
     const w = c.measureText(title.slice(0, n)).width;
@@ -354,31 +357,35 @@ export default class AI extends Scene {
     };
     // 1 · the trend (a small candle chart)
     card(570, 640, 400, 330, prog(t, 0.45, 0.85), (cc) => {
-      cc.font = font('CairoV@700', 30); cc.direction = 'rtl'; cc.textAlign = 'right'; cc.fillStyle = '#101214'; cc.fillText('الاتجاه', 370, 54);
+      cc.font = font('CairoV@700', 30); cc.direction = 'rtl'; cc.textAlign = 'right'; cc.fillStyle = '#101214'; cc.fillText('الاتجاه: هابط', 370, 54);
       for (let i = 0; i < 12; i++) {
-        const v = 120 + i * 9 + 22 * Math.sin(i * 1.7), up = i % 3 !== 1, x = 36 + i * 28, h2 = 30 + 20 * Math.abs(Math.sin(i * 2.3));
+        const v = 230 - i * 13 + 18 * Math.sin(i * 1.7), up = i % 3 === 1, x = 36 + i * 28, h2 = 30 + 20 * Math.abs(Math.sin(i * 2.3));
         cc.fillStyle = up ? '#7DB11C' : '#C9CED3'; cc.fillRect(x, 300 - v - h2, 16, h2); cc.fillRect(x + 7, 300 - v - h2 - 12, 2, h2 + 24);
       }
     });
     // 2 · the strength (a ring)
     card(110, 640, 400, 330, prog(t, 0.6, 1.0), (cc) => {
-      cc.font = font('CairoV@700', 30); cc.direction = 'rtl'; cc.textAlign = 'right'; cc.fillStyle = '#101214'; cc.fillText('قوّة الاتجاه', 370, 54);
+      cc.font = font('CairoV@700', 30); cc.direction = 'rtl'; cc.textAlign = 'right'; cc.fillStyle = '#101214'; cc.fillText('مؤشر القوة النسبية', 370, 54);
       const k = prog(t, 0.8, 1.6, ease.outCubic);
       cc.lineWidth = 22; cc.lineCap = 'round'; cc.strokeStyle = '#D9DEE2'; cc.beginPath(); cc.arc(200, 190, 92, 0, Math.PI * 2); cc.stroke();
-      cc.strokeStyle = '#7DB11C'; cc.beginPath(); cc.arc(200, 190, 92, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * 0.72 * k); cc.stroke();
-      cc.font = font('Artegra-700', 44); cc.direction = 'ltr'; cc.textAlign = 'center'; cc.fillStyle = '#101214'; cc.fillText(`${Math.round(72 * k)}%`, 200, 206);
+      cc.strokeStyle = '#7DB11C'; cc.beginPath(); cc.arc(200, 190, 92, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * 0.37 * k); cc.stroke();
+      cc.font = font('Artegra-700', 44); cc.direction = 'ltr'; cc.textAlign = 'center'; cc.fillStyle = '#101214'; cc.fillText(`${Math.round(37 * k)}`, 200, 206);
     });
     // 3 · the summary (bars)
     card(110, 1030, 860, 420, prog(t, 0.8, 1.2), (cc) => {
-      cc.font = font('CairoV@700', 32); cc.direction = 'rtl'; cc.textAlign = 'right'; cc.fillStyle = '#101214'; cc.fillText('ملخّص السوق', 820, 62);
-      const rows: [string, number, string][] = [['الذهب', 0.82, '#7DB11C'], ['اليورو/دولار', 0.55, '#2DBFA8'], ['البيتكوين', 0.68, '#7DB11C'], ['النفط', 0.38, '#B9C0C6']];
-      rows.forEach(([lab, v, col], i) => {
+      cc.font = font('CairoV@700', 32); cc.direction = 'rtl'; cc.textAlign = 'right'; cc.fillStyle = '#101214'; cc.fillText('مستويات اليوم · الذهب', 820, 62);
+      const rows: [string, string, number, string][] = [['المقاومة الأولى', '3,911.84', 0.86, '#C9CED3'], ['مستوى الارتكاز', '3,889.76', 0.29, '#2DBFA8'], ['الدعم الأول', '3,856.38', 0.57, '#7DB11C'], ['الدعم الثاني', '3,834.30', 1.14, '#7DB11C']];
+      rows.forEach(([lab, val, pct, col], i) => {
         const k = prog(t, 1.0 + i * 0.1, 1.6 + i * 0.1, ease.outCubic);
-        cc.font = font('CairoV@600', 28); cc.fillStyle = '#4A5056'; cc.textAlign = 'right'; cc.fillText(lab, 820, 140 + i * 72);
-        cc.fillStyle = '#E1E5E8'; cc.beginPath(); cc.roundRect(60, 118 + i * 72, 540, 28, 14); cc.fill();
-        cc.fillStyle = col; cc.beginPath(); cc.roundRect(600 - 540 * v * k, 118 + i * 72, 540 * v * k, 28, 14); cc.fill();
+        cc.font = font('CairoV@600', 28); cc.fillStyle = '#4A5056'; cc.textAlign = 'right'; cc.direction = 'rtl'; cc.fillText(lab, 820, 140 + i * 72);
+        cc.font = font('Artegra-600', 26); cc.fillStyle = '#101214'; cc.textAlign = 'left'; cc.direction = 'ltr'; cc.fillText(val, 60, 140 + i * 72);
+        const bw = 300 * Math.min(1, pct / 1.2) * k;
+        cc.fillStyle = '#E1E5E8'; cc.beginPath(); cc.roundRect(260, 118 + i * 72, 300, 26, 13); cc.fill();
+        cc.fillStyle = col; cc.beginPath(); cc.roundRect(560 - bw, 118 + i * 72, bw, 26, 13); cc.fill();
       });
     });
+    c.save(); c.globalAlpha = 0.6 * prog(t, 1.2, 1.6); c.font = font('CairoV@500', 26); c.direction = 'rtl'; c.textAlign = 'right'; c.fillStyle = '#F2F3F5';
+    c.fillText('مثال توضيحي من تحليل VEXODA اليومي', 970, 1500); c.restore();
     const wp = prog(t, T - 0.36, T, ease.inOutCubic);
     if (wp > 0) { c.fillStyle = '#F4F5F2'; c.fillRect(W * (1 - wp), 0, 26, H); c.fillRect(W * (1 - wp) + 26, 0, W * wp, H); c.fillStyle = '#050607'; c.fillRect(W * (1 - wp) + 52, 0, W * wp, H); }
     return { curve: prog(t, 0.2, 0.9, ease.outCubic), lift: 0.6 };
@@ -396,7 +403,7 @@ export default class AI extends Scene {
     const sk = ease.outBack(prog(t, 0.3, 0.6));
     const star = (x: number, y: number, r: number) => { c.beginPath(); for (let i = 0; i < 8; i++) { const a = (i * Math.PI) / 4, rr = i % 2 ? r * 0.22 : r; const px = x + Math.cos(a - Math.PI / 2) * rr, py = y + Math.sin(a - Math.PI / 2) * rr; i ? c.lineTo(px, py) : c.moveTo(px, py); } c.closePath(); c.fill(); };
     c.fillStyle = '#F4F6F2'; if (sk > 0) star(sx, sy, 46 * sk);
-    const nodes: [number, number, string, number][] = [[sx - 360, sy, 'دخول', 0.55], [sx, sy + 300, 'وقف الخسارة', 0.8], [sx - 360, sy + 300, 'الهدف', 1.05]];
+    const nodes: [number, number, string, number][] = [[sx - 360, sy, 'الدخول', 0.55], [sx, sy + 300, 'وقف الخسارة', 0.8], [sx - 360, sy + 300, 'جني الأرباح', 1.05]];
     c.strokeStyle = 'rgba(244,246,242,0.85)'; c.lineWidth = 3;
     nodes.forEach(([x, y, lab, t0], i) => {
       const k = prog(t, t0, t0 + 0.35, ease.inOutCubic);
@@ -406,7 +413,7 @@ export default class AI extends Scene {
       const dk = ease.outBack(prog(t, t0 + 0.28, t0 + 0.5));
       if (dk > 0) { c.fillStyle = i === 2 ? '#B5EC3A' : '#F4F6F2'; c.beginPath(); c.arc(x, y, 22 * dk, 0, Math.PI * 2); c.fill(); }
       c.save(); c.globalAlpha = prog(t, t0 + 0.35, t0 + 0.6); c.font = font('CairoV@600', 38); c.direction = 'rtl'; c.textAlign = 'center'; c.fillStyle = '#F4F6F2';
-      c.fillText(lab, x, y + 72); c.restore();
+      c.fillText(lab, x, i === 0 ? y - 52 : y + 72); c.restore();   // the entry's label sits above it (its wire runs down)
     });
     // the V's outline, large, in the lower left corner (the reference's half-seen logo)
     const vk = prog(t, 0.4, 1.4, ease.inOutCubic);
@@ -449,7 +456,8 @@ export default class AI extends Scene {
         if (k <= 0) return;
         const x = cx + Math.cos(a) * rx * k, y = cy + Math.sin(a) * ry * k;
         c.save(); c.globalAlpha = clamp(k) * 0.55; c.strokeStyle = '#F4F6F2'; c.lineWidth = 1.6;
-        c.beginPath(); c.moveTo(cx + Math.cos(a) * 140, cy + Math.sin(a) * 80); c.bezierCurveTo(cx + Math.cos(a) * 260, cy + Math.sin(a) * 200, x - Math.cos(a) * 60, y - Math.sin(a) * 60, x - Math.cos(a) * 52, y - Math.sin(a) * 52); c.stroke(); c.restore();
+        const ex = Math.cos(a) * (pw / 2 + 8), ey = Math.sin(a) * (ph / 2 + 8);   // threads start on the pill's edge, never across the name
+        c.beginPath(); c.moveTo(cx + ex, cy + ey); c.bezierCurveTo(cx + ex * 1.5, cy + ey * 2.2, x - Math.cos(a) * 60, y - Math.sin(a) * 60, x - Math.cos(a) * 52, y - Math.sin(a) * 52); c.stroke(); c.restore();
         c.save(); c.translate(x, y); c.scale(k, k);
         c.beginPath(); c.arc(0, 0, 50, 0, Math.PI * 2); c.fillStyle = 'rgba(20,22,24,0.9)'; c.fill();
         c.strokeStyle = i % 2 ? 'rgba(244,246,242,0.6)' : 'rgba(181,236,58,0.9)'; c.lineWidth = 2.4; c.stroke();

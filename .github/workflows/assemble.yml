@@ -39,8 +39,8 @@ jobs:
           mkdir -p $D && cat assets/$D.tgz.enc.part-* | openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:ASSETS_KEY | tar -C $D -xzf - audio/mix.wav
           gh release view final -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh release create final -R "$GITHUB_REPOSITORY" --title "Finals" --notes "deliverables" --latest=false
           mkdir w && cd w
-          gh release download previews -p "$D-*-s$S.mp4" -R "$GITHUB_REPOSITORY"
-          ls $D-*-s$S.mp4 | python3 -c "import sys,re; fs=sys.stdin.read().split(); fs.sort(key=lambda f: float(re.match(r'.*?-([0-9.]+)-([0-9.]+)-s', f).group(1))); print('\n'.join(f\"file '{f}'\" for f in fs))" > list.txt
+          gh release download previews -p "$D-[0-9]*-s$S.mp4" -R "$GITHUB_REPOSITORY"   # [0-9]: «hesit» must not take «hesit-en»'s parts
+          ls $D-[0-9]*-s$S.mp4 | python3 -c "import sys,re; fs=sys.stdin.read().split(); fs.sort(key=lambda f: float(re.match(r'.*?-([0-9.]+)-([0-9.]+)-s', f).group(1))); print('\n'.join(f\"file '{f}'\" for f in fs))" > list.txt
           cat list.txt
           C="-color_primaries bt709 -color_trc bt709 -colorspace bt709"
           ffmpeg -v error -y -f concat -safe 0 -i list.txt -i ../$D/audio/mix.wav -map 0:v -map 1:a -t $DUR \

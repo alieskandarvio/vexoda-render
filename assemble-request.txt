@@ -1,2 +1,2 @@
-# <dir> <scale> <duration> <name> — v2 1003
-aiflow 2 27.3 VEXODA-AI-Reel-AR
+# <dir> <scale> <duration> <name> — «Stop guessing» English cut
+aiflow-en 2 27.3 VEXODA-AI-Reel-EN

@@ -1,2 +1,2 @@
-# <dir> <scale> <duration> <name> — «Hesitation is expensive» (English)
-hesit-en 2 26.4 VEXODA-Hesitation-EN
+# <dir> <scale> <duration> <name> — «تحليل اليوم» trial
+daily 2 38.9 VEXODA-Daily-Analysis-AR

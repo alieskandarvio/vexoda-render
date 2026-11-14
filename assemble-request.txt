@@ -1,2 +1,2 @@
-# <dir> <scale> <duration> <name> — «Stop guessing» English cut
-aiflow-en 2 27.3 VEXODA-AI-Reel-EN
+# <dir> <scale> <duration> <name> — «التردّد مكلف» (Arabic)
+hesit 2 30.3 VEXODA-Hesitation-AR

@@ -1,2 +1,2 @@
-# <dir> <scale> <duration> <name> — «التردّد مكلف» (Arabic)
-hesit 2 30.3 VEXODA-Hesitation-AR
+# <dir> <scale> <duration> <name> — «Hesitation is expensive» (English)
+hesit-en 2 26.4 VEXODA-Hesitation-EN

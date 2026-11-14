@@ -75,7 +75,7 @@ jobs:
           O="$GITHUB_WORKSPACE/$D-$A-$Z-s$S.mp4"; V="$GITHUB_WORKSPACE/v.mp4"
           bun scripts/render.ts video --from $A --to $Z --fps 60 --scale $S --samples $N --shutter 0.5 --crf 12 --noaudio \
             --chrome /usr/bin/google-chrome --out "$V" 2>&1 | tail -20
-          if [ -f ../audio/mix.wav ]; then
+          if [ -f ../audio/mix.wav ] && [ "${NOMUX:-}" != 1 ] && [ ! -f ../data/.nomux ]; then
             ffmpeg -v error -y -i "$V" -ss $A -t $(python3 -c "print($Z-$A)") -i ../audio/mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -shortest -movflags +faststart "$O"
           else cp "$V" "$O"; fi
           ffprobe -v error -show_entries stream=width,height,bit_rate:format=duration,size -of compact "$O"

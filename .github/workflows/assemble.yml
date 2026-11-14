@@ -1,0 +1,52 @@
+# Join a project's rendered segments («previews» release, <dir>-<from>-<to>-s<scale>.mp4, in time order), lay its
+# audio/mix.wav under them and encode the deliverables, uploaded to the «final» release:
+#   <name>-4K.mp4      2160x3840 @ 60, crf 16 capped at 68 Mb/s (YouTube's 2160p60 top)   ← YouTube
+#   <name>-1080.mp4    1080x1920 @ 60, ~20 Mb/s                                             ← Instagram / Facebook / TikTok
+# assemble-request.txt: "<dir> <scale> <duration> <name>"
+name: assemble
+
+on:
+  push:
+    branches: [main]
+    paths: ['assemble-request.txt']
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /assemble-request.txt
+            /assets/
+            /ci/
+          sparse-checkout-cone-mode: false
+      - name: join + encode
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ASSETS_KEY: ${{ secrets.ASSETS_KEY }}
+        run: |
+          read D S DUR NAME < <(grep -v '^#' assemble-request.txt | head -1)
+          bash ci/ffmpeg.sh
+          mkdir -p $D && cat assets/$D.tgz.enc.part-* | openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:ASSETS_KEY | tar -C $D -xzf - audio/mix.wav
+          gh release view final -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh release create final -R "$GITHUB_REPOSITORY" --title "Finals" --notes "deliverables" --latest=false
+          mkdir w && cd w
+          gh release download previews -p "$D-*-s$S.mp4" -R "$GITHUB_REPOSITORY"
+          ls $D-*-s$S.mp4 | python3 -c "import sys,re; fs=sys.stdin.read().split(); fs.sort(key=lambda f: float(re.match(r'.*?-([0-9.]+)-([0-9.]+)-s', f).group(1))); print('\n'.join(f\"file '{f}'\" for f in fs))" > list.txt
+          cat list.txt
+          C="-color_primaries bt709 -color_trc bt709 -colorspace bt709"
+          ffmpeg -v error -y -f concat -safe 0 -i list.txt -i ../$D/audio/mix.wav -map 0:v -map 1:a -t $DUR \
+            -c:v libx264 -preset slow -crf 16 -maxrate 68M -bufsize 136M -profile:v high -level:v 5.2 -pix_fmt yuv420p -r 60 $C -x264-params aq-mode=3 \
+            -c:a aac -b:a 320k -ar 48000 -movflags +faststart $NAME-4K.mp4
+          ffmpeg -v error -y -i $NAME-4K.mp4 -vf scale=1080:1920:flags=lanczos -c:v libx264 -preset slow -b:v 20M -maxrate 24M -bufsize 40M -profile:v high -pix_fmt yuv420p $C \
+            -c:a aac -b:a 256k -ar 48000 -movflags +faststart $NAME-1080.mp4
+          for f in $NAME-4K.mp4 $NAME-1080.mp4; do ffprobe -v error -show_entries stream=width,height,bit_rate:format=duration,size -of compact $f; done
+          gh release upload final $NAME-4K.mp4 $NAME-1080.mp4 --clobber -R "$GITHUB_REPOSITORY"

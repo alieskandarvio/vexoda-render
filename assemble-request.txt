@@ -1,2 +1,2 @@
-# <dir> <scale> <duration> <name> — «تحليل اليوم» trial
-daily 2 38.9 VEXODA-Daily-Analysis-AR
+# <dir> <scale> <duration> <name> — «لماذا يتحرّك الذهب؟»
+goldwhy 2 37.5 VEXODA-Gold-Why-AR

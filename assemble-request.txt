@@ -1,2 +1,2 @@
-# <dir> <scale> <duration> <name> — «لماذا يتحرّك الذهب؟»
-goldwhy 2 37.5 VEXODA-Gold-Why-AR
+# <dir> <scale> <duration> <name> — «Why does gold move?»
+goldwhy-en 2 30.0 VEXODA-Gold-Why-EN

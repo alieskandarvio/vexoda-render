@@ -1,0 +1,34 @@
+# Video-podcast cut: decrypt pod1's clips/charts/sound (ASSETS_KEY), run pod1/edit.py, upload to the «final» release.
+# pod-request.txt: "<dir> <name>"
+name: podedit
+
+on:
+  push:
+    branches: [main]
+    paths: ['pod-request.txt']
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: cut + encode
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ASSETS_KEY: ${{ secrets.ASSETS_KEY }}
+        run: |
+          read D NAME < <(grep -v '^#' pod-request.txt | head -1)
+          bash ci/ffmpeg.sh
+          cat assets/$D.tgz.enc.part-* | openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:ASSETS_KEY | tar -C $D -xzf -
+          cd $D && python3 edit.py ../$NAME.mp4 && cd ..
+          ffprobe -v error -show_entries stream=codec_type,width,height,r_frame_rate:format=duration,size -of compact $NAME.mp4
+          gh release view final -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh release create final -R "$GITHUB_REPOSITORY" --title "Finals" --notes "deliverables" --latest=false
+          gh release upload final $NAME.mp4 --clobber -R "$GITHUB_REPOSITORY"

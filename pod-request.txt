@@ -1,0 +1,2 @@
+# <dir> <name> — the 1-minute video-podcast test (Saudi × Lebanese, gold scenarios)
+pod1 VEXODA-Podcast-Test-1min

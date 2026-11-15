@@ -1,2 +1,2 @@
 # <dir> <scale> <duration> <name> — «Why does gold move?»
-goldwhy-en 2 30.0 VEXODA-Gold-Why-EN
+podchart 1 50.0 VEXODA-Podcast-Chart-Preview

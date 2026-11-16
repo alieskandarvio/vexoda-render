@@ -1,2 +1,2 @@
 # <dir> <scale> <duration> <name> — «Why does gold move?»
-podchart 1 50.0 VEXODA-Podcast-Chart-Preview
+plan 2 41.5 VEXODA-Profit-Plan-AR

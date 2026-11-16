@@ -1,0 +1,451 @@
+{
+ "source": "/root/plan-reel-20261116/vo-en/e1fix 18.85-52.1 @ 0.4",
+ "lines": [
+  {
+   "text": "Profits look impressive…",
+   "start": 0.57,
+   "end": 1.83,
+   "words": [
+    {
+     "w": "Profits",
+     "start": 0.57,
+     "end": 0.95
+    },
+    {
+     "w": "look",
+     "start": 0.95,
+     "end": 1.23
+    },
+    {
+     "w": "impressive…",
+     "start": 1.23,
+     "end": 1.83
+    }
+   ]
+  },
+  {
+   "text": "until the plan is tested.",
+   "start": 1.83,
+   "end": 4.18,
+   "words": [
+    {
+     "w": "until",
+     "start": 1.83,
+     "end": 2.58
+    },
+    {
+     "w": "the",
+     "start": 2.71,
+     "end": 2.95
+    },
+    {
+     "w": "plan",
+     "start": 2.95,
+     "end": 3.27
+    },
+    {
+     "w": "is",
+     "start": 3.27,
+     "end": 3.43
+    },
+    {
+     "w": "tested.",
+     "start": 3.43,
+     "end": 4.18
+    }
+   ]
+  },
+  {
+   "text": "Trades win, the account grows, confidence rises.",
+   "start": 4.71,
+   "end": 8.17,
+   "words": [
+    {
+     "w": "Trades",
+     "start": 4.71,
+     "end": 4.93
+    },
+    {
+     "w": "win,",
+     "start": 4.93,
+     "end": 5.68
+    },
+    {
+     "w": "the",
+     "start": 5.73,
+     "end": 5.85
+    },
+    {
+     "w": "account",
+     "start": 5.85,
+     "end": 6.19
+    },
+    {
+     "w": "grows,",
+     "start": 6.19,
+     "end": 6.94
+    },
+    {
+     "w": "confidence",
+     "start": 7.15,
+     "end": 7.67
+    },
+    {
+     "w": "rises.",
+     "start": 7.67,
+     "end": 8.17
+    }
+   ]
+  },
+  {
+   "text": "Then something changes.",
+   "start": 9.09,
+   "end": 10.64,
+   "words": [
+    {
+     "w": "Then",
+     "start": 9.09,
+     "end": 9.35
+    },
+    {
+     "w": "something",
+     "start": 9.35,
+     "end": 9.89
+    },
+    {
+     "w": "changes.",
+     "start": 9.89,
+     "end": 10.64
+    }
+   ]
+  },
+  {
+   "text": "Sudden news shakes the market.",
+   "start": 11.21,
+   "end": 13.3,
+   "words": [
+    {
+     "w": "Sudden",
+     "start": 11.21,
+     "end": 11.45
+    },
+    {
+     "w": "news",
+     "start": 11.45,
+     "end": 11.91
+    },
+    {
+     "w": "shakes",
+     "start": 11.91,
+     "end": 12.35
+    },
+    {
+     "w": "the",
+     "start": 12.35,
+     "end": 12.55
+    },
+    {
+     "w": "market.",
+     "start": 12.55,
+     "end": 13.3
+    }
+   ]
+  },
+  {
+   "text": "The stop loss was never set.",
+   "start": 13.96,
+   "end": 15.95,
+   "words": [
+    {
+     "w": "The",
+     "start": 13.96,
+     "end": 14.06
+    },
+    {
+     "w": "stop",
+     "start": 14.06,
+     "end": 14.44
+    },
+    {
+     "w": "loss",
+     "start": 14.44,
+     "end": 14.62
+    },
+    {
+     "w": "was",
+     "start": 14.62,
+     "end": 14.96
+    },
+    {
+     "w": "never",
+     "start": 14.96,
+     "end": 15.2
+    },
+    {
+     "w": "set.",
+     "start": 15.2,
+     "end": 15.95
+    }
+   ]
+  },
+  {
+   "text": "And the trade turns against you.",
+   "start": 16.2,
+   "end": 18.1,
+   "words": [
+    {
+     "w": "And",
+     "start": 16.2,
+     "end": 16.34
+    },
+    {
+     "w": "the",
+     "start": 16.34,
+     "end": 16.42
+    },
+    {
+     "w": "trade",
+     "start": 16.42,
+     "end": 16.82
+    },
+    {
+     "w": "turns",
+     "start": 16.82,
+     "end": 17.36
+    },
+    {
+     "w": "against",
+     "start": 17.36,
+     "end": 17.76
+    },
+    {
+     "w": "you.",
+     "start": 17.76,
+     "end": 18.1
+    }
+   ]
+  },
+  {
+   "text": "That's when the real question appears:",
+   "start": 19.1,
+   "end": 21.05,
+   "words": [
+    {
+     "w": "That's",
+     "start": 19.1,
+     "end": 19.36
+    },
+    {
+     "w": "when",
+     "start": 19.36,
+     "end": 19.5
+    },
+    {
+     "w": "the",
+     "start": 19.5,
+     "end": 19.66
+    },
+    {
+     "w": "real",
+     "start": 19.66,
+     "end": 19.88
+    },
+    {
+     "w": "question",
+     "start": 19.88,
+     "end": 20.3
+    },
+    {
+     "w": "appears:",
+     "start": 20.3,
+     "end": 21.05
+    }
+   ]
+  },
+  {
+   "text": "Was your profit skill… or luck?",
+   "start": 21.48,
+   "end": 23.99,
+   "words": [
+    {
+     "w": "Was",
+     "start": 21.48,
+     "end": 21.64
+    },
+    {
+     "w": "your",
+     "start": 21.64,
+     "end": 21.82
+    },
+    {
+     "w": "profit",
+     "start": 21.82,
+     "end": 22.2
+    },
+    {
+     "w": "skill…",
+     "start": 22.2,
+     "end": 22.62
+    },
+    {
+     "w": "or",
+     "start": 22.62,
+     "end": 23.24
+    },
+    {
+     "w": "luck?",
+     "start": 23.24,
+     "end": 23.99
+    }
+   ]
+  },
+  {
+   "text": "Real profit holds under pressure.",
+   "start": 24.74,
+   "end": 26.73,
+   "words": [
+    {
+     "w": "Real",
+     "start": 24.74,
+     "end": 24.94
+    },
+    {
+     "w": "profit",
+     "start": 24.94,
+     "end": 25.34
+    },
+    {
+     "w": "holds",
+     "start": 25.34,
+     "end": 25.72
+    },
+    {
+     "w": "under",
+     "start": 25.72,
+     "end": 25.98
+    },
+    {
+     "w": "pressure.",
+     "start": 25.98,
+     "end": 26.73
+    }
+   ]
+  },
+  {
+   "text": "Fragile profit collapses at the first test.",
+   "start": 27.18,
+   "end": 29.75,
+   "words": [
+    {
+     "w": "Fragile",
+     "start": 27.18,
+     "end": 27.36
+    },
+    {
+     "w": "profit",
+     "start": 27.36,
+     "end": 27.78
+    },
+    {
+     "w": "collapses",
+     "start": 27.78,
+     "end": 28.3
+    },
+    {
+     "w": "at",
+     "start": 28.3,
+     "end": 28.64
+    },
+    {
+     "w": "the",
+     "start": 28.64,
+     "end": 28.76
+    },
+    {
+     "w": "first",
+     "start": 28.76,
+     "end": 29.0
+    },
+    {
+     "w": "test.",
+     "start": 29.0,
+     "end": 29.75
+    }
+   ]
+  },
+  {
+   "text": "That's why profit needs a plan.",
+   "start": 30.02,
+   "end": 31.9,
+   "words": [
+    {
+     "w": "That's",
+     "start": 30.02,
+     "end": 30.28
+    },
+    {
+     "w": "why",
+     "start": 30.28,
+     "end": 30.46
+    },
+    {
+     "w": "profit",
+     "start": 30.46,
+     "end": 30.94
+    },
+    {
+     "w": "needs",
+     "start": 30.94,
+     "end": 31.3
+    },
+    {
+     "w": "a",
+     "start": 31.3,
+     "end": 31.42
+    },
+    {
+     "w": "plan.",
+     "start": 31.42,
+     "end": 31.9
+    }
+   ]
+  },
+  {
+   "text": "Trade with a plan, with VEXODA.",
+   "start": 32.68,
+   "end": 34.63,
+   "words": [
+    {
+     "w": "Trade",
+     "start": 32.68,
+     "end": 32.97
+    },
+    {
+     "w": "with",
+     "start": 32.97,
+     "end": 33.17
+    },
+    {
+     "w": "a",
+     "start": 33.17,
+     "end": 33.29
+    },
+    {
+     "w": "plan,",
+     "start": 33.29,
+     "end": 33.61
+    },
+    {
+     "w": "with",
+     "start": 33.61,
+     "end": 34.17
+    },
+    {
+     "w": "VEXODA.",
+     "start": 34.17,
+     "end": 34.63
+    }
+   ]
+  }
+ ]
+}

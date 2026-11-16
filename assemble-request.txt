@@ -1,2 +1,2 @@
 # <dir> <scale> <duration> <name> — «Why does gold move?»
-plan 2 41.5 VEXODA-Profit-Plan-AR
+plan-en 2 38.2 VEXODA-Profit-Plan-EN
